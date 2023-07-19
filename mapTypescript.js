@@ -1,4 +1,4 @@
-// need to compile js file by running command: npx tsc mapTypescript.t
+// need to compile js file by running command: npx tsc mapTypescript.ts
 // then run: node mapTypescript.js
 var ExtrasTypes;
 (function (ExtrasTypes) {
@@ -12,3 +12,9 @@ var fixedFunc = dataProviders.get(ExtrasTypes.FIXED_TYPE);
 fixedFunc(10);
 var percentageFunc = dataProviders.get(ExtrasTypes.PERCENTAGE_TYPE);
 percentageFunc(10);
+var sampleSet = new Set(); // just store key, not key-value and unique keys only
+sampleSet.add("duy");
+sampleSet.add("trinh");
+sampleSet.add("tram");
+sampleSet.add("duy");
+console.log(sampleSet);
