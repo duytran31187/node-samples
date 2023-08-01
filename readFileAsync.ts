@@ -1,17 +1,16 @@
-import * as fs from "fs";
+const fs = require('fs/promises');
 import * as buffer from "buffer";
 // command: npx tsc readFileAsync.ts && node readFileAsync.js
 // read file synchronously
 
 async function readLogFile() {
-  return new Promise((resolve, reject) => {
-    fs.readFile(`tmp/application111.log`, 'utf8', function (err, data) {
-      if (err) {
-        reject(err);
-      }
-      resolve(data);
-    });
-  });
+  try {
+    const data = await fs.readFile('tmp/application.log', { encoding: 'utf8' });
+    // console.log(`log data %o`, data);
+    return data;
+  } catch (err) {
+    console.log(`error %o`, err);
+  }
 }
 
 readLogFile().then((data) => {
