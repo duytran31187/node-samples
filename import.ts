@@ -16,12 +16,12 @@ export const gfValueTypes = ['FIXED', 'PERCENTAGE'] as const;
 export type GFValueType = typeof gfValueTypes[number];
 
 export type CsvExtraItem = {
-  vehicle_type: vehicleTypes;
+  vehicle_type: VehicleTypes;
   vehicle_manufacturer?: string;
   vehicle_model: string;
-  vehicle_condition: vehicleConditionTypes;
+  vehicle_condition: VehicleConditionTypes;
   id: string;
-  type: extraTypes;
+  type: ExtraTypes;
   title: string;
   description?: string;
   media_images?: string;
@@ -58,21 +58,21 @@ export class CsvExtraItemModel {
     ].includes(field);
   }
   isEmptyField(field: keyof CsvExtraItem): boolean {
-    return !!this.csvExtraItem[field];
+    return !this.csvExtraItem[field];
   }
 }
-export enum vehicleTypes {
+export enum VehicleTypes {
   CAR = 'CAR',
   BIKE = 'BIKE',
   VAN = 'VAN'
 }
-export enum vehicleConditionTypes {
+export enum VehicleConditionTypes {
   NEW = 'NEW',
   USED = 'USED',
   PRE_ORDER = 'PRE_ORDER'
 }
 
-export enum extraTypes {
+ enum ExtraTypes {
   EXTRA = 'EXTRA',
   SERVICE_PLAN = 'SERVICE_PLAN',
   ACCESSORY = 'ACCESSORY'
@@ -92,7 +92,7 @@ const CsvExtraItemType = [
 ] as const;
 
 let validationErrors: string[][] = [];
-
+const itemByVehicleTypes = new Map<VehicleTypes, CsvExtraItem[]>();
 
 function isEmptyField(fieldValue: any): boolean {
   return fieldValue == undefined || fieldValue === '';
@@ -103,13 +103,14 @@ const validateItem = (csvItem: CsvExtraItem): string[] => {
   CsvExtraItemType.forEach((key, index) => {
     type csvItemProperties = keyof CsvExtraItem;
 
-    // const fieldValue = csvItem[key as csvItemProperties]
-    // if (isEmptyField(fieldValue)) {
-    //   itemValidationErrors.push(
-    //       `required field missed: '${key}'`
-    //   );
-    // }
-    if (!!csvItem[key as csvItemProperties]) {
+    const fieldValue = csvItem[key as csvItemProperties]
+    if (isEmptyField(fieldValue)) {
+      itemValidationErrors.push(
+          `required field missed: '${key}'`
+      );
+    }
+    console.log(`required field %s has value is %s vs %s`, key,csvItem[key as csvItemProperties], !csvItem[key as csvItemProperties], !!csvItem[key as csvItemProperties]);
+    if (!csvItem[key as csvItemProperties]) {
       itemValidationErrors.push(
           `required field missed: '${key}'`
       );
@@ -117,8 +118,8 @@ const validateItem = (csvItem: CsvExtraItem): string[] => {
   });
   
   if (
-      !Object.values(vehicleTypes).includes(
-          csvItem.vehicle_type as vehicleTypes
+      !Object.values(VehicleTypes).includes(
+          csvItem.vehicle_type as VehicleTypes
       )
   ) {
     itemValidationErrors.push(
@@ -126,15 +127,15 @@ const validateItem = (csvItem: CsvExtraItem): string[] => {
     );
   }
   if (
-      !Object.values(extraTypes).includes(csvItem.type as extraTypes)
+      !Object.values(ExtraTypes).includes(csvItem.type as ExtraTypes)
   ) {
     itemValidationErrors.push(
         `Invalid extra type: ${csvItem.type}.`
     );
   }
   if (
-      !Object.values(vehicleConditionTypes).includes(
-          csvItem.vehicle_condition as vehicleConditionTypes
+      !Object.values(VehicleConditionTypes).includes(
+          csvItem.vehicle_condition as VehicleConditionTypes
       )
   ) {
     itemValidationErrors.push(
@@ -174,15 +175,26 @@ const importDataset = async () => {
           } else {
             successItem++;
             // create here
-            console.info(`success imported: ${numberItem}| ${item.pricing_value} | ${item.vehicle_condition} | ${item.vehicle_type} | ${item.type}`);
+            console.log(`success imported: ${numberItem}| ${item.pricing_value} | ${item.vehicle_condition} | ${item.vehicle_type} | ${item.type}`);
+            //
+            const arr_key = item.vehicle_type;
+            let currentItems = itemByVehicleTypes.get(arr_key);// get current arrays of with this type
+            if (!currentItems) {
+              currentItems = [];
+            }
+            currentItems.push(item);
+            console.log(`current array of %s is %o`, arr_key, currentItems);
+            itemByVehicleTypes.set(arr_key, currentItems);
+
           }
           // console.log(item);
         });
 
     customLogger.info(`success imported ${successItem}`);
     customLogger.info(`failed imported ${failedItem}`);
+    customLogger.info(`itemByVehicleTypes %o`, itemByVehicleTypes);
   } catch (e) {
-    console.log(`error ${JSON.stringify(e)}`);
+    console.log(`error %o`, e);
   }
 }
 importDataset();
