@@ -1,0 +1,17 @@
+{
+  "name": "2-express-tutorial",
+  "version": "1.0.0",
+  "description": "express learning",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Duy Tran",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
