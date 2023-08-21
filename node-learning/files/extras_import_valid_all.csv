@@ -1,2 +1,0 @@
-vehicle_type,vehicle_manufacturer,vehicle_model,vehicle_condition,id,type,title,description,media_images,pricing_value,pricing_valueType,availability_leadTime,isDefault,category,quantity_min,quantity_max,quantity_default,vap
-CAR,FORD,,NEW,VALID-CAR,SERVICE_PLAN,aaa,bbbb,,2499.99,FIXED,5,TRUE,Maintenance,0,1,0,FALSE

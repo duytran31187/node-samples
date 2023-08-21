@@ -1,2 +1,0 @@
-vehicle_type,vehicle_manufacturer,vehicle_model,vehicle_condition,id,type,title,description,media_images,pricing_value,pricing_valueType,availability_leadTime,isDefault,category,quantity_min,quantity_max,quantity_default,vap
-CAR,FORD,KUGA,NEW,VALID-CAR,SERVICE_PLAN,3 Year Service Plan,<p>This is a description of a 3 year service plan it applies to any FORD car</p>,,2499.99,FIXED,5,TRUE,Maintenance,a,a,a,FALSE
