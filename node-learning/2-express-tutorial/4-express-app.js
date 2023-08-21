@@ -1,3 +1,7 @@
+// to run:
+// copy the content to app.js file
+// then run command: npm start
+
 const express = require("express");
 const path = require("path");
 const app = express();
