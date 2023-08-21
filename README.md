@@ -1,3 +1,3 @@
 Learn nodejs
 
-To complie ts file: npx tsc filename.ts
+To compile ts file: npx tsc filename.ts
