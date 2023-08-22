@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const logger = require('./logger')
+const logger = require('./logger');
+const authorize = require('./authorize');
 //  req => middleware => res
 app.use([logger]);
 // api/home/about/products
@@ -16,6 +17,10 @@ app.get('/api/products', (req, res) => {
 app.get('/api/items', (req, res) => {
   console.log(req.user)
   res.send('Items')
+})
+
+app.get('/api/login',[authorize], (req, res) => {
+  res.send('api login');
 })
 
 app.listen(5000, () => {
