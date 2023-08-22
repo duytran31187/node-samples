@@ -6,19 +6,24 @@ const morgan = require('morgan');
 //  req => middleware => res
 app.use([morgan('tiny')]);
 // api/home/about/products
-app.use(express.urlencoded());
+// parse form data
+app.use(express.urlencoded({ extended: false })) // parse if Content-Type is application/x-www-form-urlencoded
+// parse json
+app.use(express.json()) // // parse if Content-Type is application/json
+
 app.get('/', (req, res) => {
   res.send('Home')
 })
 app.post('/api/user', (req, res) => {
   const {user} = req.body;
+  console.log(req.body);
   if (user) {
     res.status(200).send(`Welcome ${user}`);
   } else {
     res.status(401).send('please provide credentials');
   }
 });
-// make post to http://localhost:5000/api/user with {user:duy}
+
 
 app.listen(5000, () => {
   console.log('Server is listening on port 5000....')
