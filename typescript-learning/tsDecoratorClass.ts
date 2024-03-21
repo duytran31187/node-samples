@@ -1,6 +1,6 @@
 // To run: npx tsc tsDecoratorClass.ts && node tsDecoratorClass.js
 
-function WithFuel(target: typeof Rocket, context): typeof Rocket {
+function WithFuel(target: typeof Rocket, context: any) {
   console.log(`context: ${JSON.stringify(context)}`);
     if (context.kind === "class") {
       console.log(`decorating class ${target.name}`);

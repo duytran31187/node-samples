@@ -1,4 +1,5 @@
 /node_modules
+/typescript-learning/node_modules
 /node-learning/2-express-tutorial/node_modules
 /tmp
 /files
