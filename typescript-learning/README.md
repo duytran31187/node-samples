@@ -12,4 +12,5 @@ export {}
  - TypeScript has ES Module syntax means: use Import && Exort
  - CommonJS is the format which most modules on npm are delivered in => means: use module.exports && require
  - The core primitive types in TypeScript are all lowercase! (string, number, boolean)
- - funciton can be considered as type: base on declaration input params and output sample
+ - function as type: base on declaration input params and output samples
+ - callback functions can return something, even if the argument on which they're passed does NOT expect a returned value
