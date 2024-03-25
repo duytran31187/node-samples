@@ -125,3 +125,12 @@ sendRequest("Send this!", (response) => {
   console.log(response);
   return true;
 });
+
+// Rest operator
+const addUnlimitedNumbers = (...numbers: number[]) => {
+  return numbers.reduce((curResult, curValue) => {
+    return curResult + curValue;
+  }, 0)
+}
+console.log(addUnlimitedNumbers(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+console.log(addUnlimitedNumbers());
