@@ -73,3 +73,30 @@ console.log(combineValues(8, 8));
 combineValues = substract;
 console.log(combineValues(8, 8));
 // combineValues = printResult;  // compilation error:Type 'void' is not assignable to type 'number'
+
+/**
+ * addAndHandle is a function receives 3 parameters: the first 2 are numbers, the last one is a function receives a number and return void
+ * @param a 
+ * @param b 
+ * @param callbackFunc 
+ */
+function addAndHandle(
+    a: number,
+    b: number, 
+    callbackFunc: (result: number) => void
+) {
+    const result = a + b;
+    callbackFunc(result);
+}
+addAndHandle(
+    10,
+    20,
+    (result) => {
+        console.log(`Result is ${result}`);
+    }
+);
+addAndHandle(
+    10,
+    10,
+    printResult
+);
