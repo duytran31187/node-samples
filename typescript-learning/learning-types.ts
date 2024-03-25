@@ -55,3 +55,21 @@ class FptDeveloperModel implements FptDeveloper {
 
 const persion1 = new FptDeveloperModel({firstName: 'John', lastName: 'Don', age: 20, isAdult: true}, 8, 'javascript', 'FPT Software', DevRoles.JUNIOR);
 const persion2 = new FptDeveloperModel({firstName: 'evan', lastName: 'David', age: 30, isAdult: true}, 8, 'javascript', 'abc');
+
+// function as types
+function add(a: number, b: number): number {
+    return a + b;
+}
+function substract(a: number, b: number): number {
+    return a - b;
+}
+
+function printResult(num: number): void {
+    console.log(`Result is ${num}`);
+}
+let combineValues: (a: number, b: number) => number;
+combineValues = add;
+console.log(combineValues(8, 8));
+combineValues = substract;
+console.log(combineValues(8, 8));
+// combineValues = printResult;  // compilation error:Type 'void' is not assignable to type 'number'
