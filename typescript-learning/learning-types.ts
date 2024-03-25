@@ -134,3 +134,11 @@ const addUnlimitedNumbers = (...numbers: number[]) => {
 }
 console.log(addUnlimitedNumbers(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 console.log(addUnlimitedNumbers());
+
+// Array && object destructuring
+const hobbies = ['Sports', 'Cooking'];
+const [hobby1, hobby2] = hobbies;
+console.log(`hobby1: ${hobby1}, hobby2: ${hobby2}`);
+const sampleObject = {first: 1, second: 2, third: 3, fourth: 4, fifth: 5};
+const {first, second, third: thirdParam} = sampleObject; // first, second must match the key of the object, thirdParam is the alias of the key
+console.log(`first: ${first}, second: ${second} third ${thirdParam}`);
