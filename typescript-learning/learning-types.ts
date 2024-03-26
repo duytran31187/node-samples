@@ -80,9 +80,17 @@ const persion2 = new FptDeveloperModel(
 );
 
 // function as types
-function add(a: number, b: number): number {
-  return a + b;
+interface AddFn {
+  (a: number, b: number): number;
 }
+type AddFnType = (a: number, b: number) => number;
+let add: AddFn; // or we can declare as let add: AddFnType
+add = (n1: number, n2: number) => {
+  return n1 + n2;
+};
+// function add(a: number, b: number): number {
+//   return a + b;
+// }
 function substract(a: number, b: number): number {
   return a - b;
 }
