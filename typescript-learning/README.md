@@ -18,3 +18,4 @@ export {}
 
  #issues
  1. "Unable to resolve signature of class decorator when called as an expression. The runtime will invoke the decorator with 1 arguments, but the decorator expects 2." => to sort: remove experimentalDecorators from tsconfig.json
+ - To make decorator work, need to enable settings on tsconfig.json:experimentalDecorators, emitDecoratorMetadata
