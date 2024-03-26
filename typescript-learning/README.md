@@ -14,3 +14,7 @@ export {}
  - The core primitive types in TypeScript are all lowercase! (string, number, boolean)
  - function as type: base on declaration input params and output samples
  - callback functions can return something, even if the argument on which they're passed does NOT expect a returned value
+
+
+ #issues
+ 1. "Unable to resolve signature of class decorator when called as an expression. The runtime will invoke the decorator with 1 arguments, but the decorator expects 2." => to sort: remove experimentalDecorators from tsconfig.json
