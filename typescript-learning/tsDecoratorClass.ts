@@ -7,6 +7,7 @@ function WithFuel(target: typeof Rocket, context: any) {
       return class extends target {
         // fuel: number = 50
         isEmpty(): boolean {
+          console.log(`[Decorator] fuel: ${this.fuel}`);
           return this.fuel == 0
         }
       }
@@ -23,7 +24,7 @@ function WithFuel(target: typeof Rocket, context: any) {
   }
   
   const rocket = new Rocket()
-  const car = new Car()
+  // const car = new Car()
   console.log(`is fuel empty? ${(rocket as any).isEmpty()}`);
   // console.log(`Is the rocket empty? ${(rocket as any).isEmpty()}`)
   // console.log(car.fuel)
