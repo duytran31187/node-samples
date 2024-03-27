@@ -4,6 +4,19 @@ let sampleName = null;
 let text = 'Default value';
 let result = sampleName ?? text; // result = text, explain: if sampleName is null or undefined, result will be assigned with text value, otherwise, result will be assigned with sampleName value
 
+// The Optional Chaining Operator (?.)
+type Computer = {
+  name: string;
+  price: number;
+  brand?: string;
+  warranty?: number;
+};
+const firstPC: Computer = {
+  name: 'PC1',
+  price: 1000,
+  brand: 'Dell',
+};
+console.log(`first pc has waranty time is ${firstPC?.warranty}`); // if firstPC.warranty is null or undefined, the result will be undefined, otherwise, the result will be the value of firstPC.warranty
 //sample tuple type: there 3 elements in the tuple: location, timeStamp, name, each element has its own type
 type TupleData = [
   location: Location,
