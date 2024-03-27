@@ -1,3 +1,11 @@
+//sample tuple type: there 3 elements in the tuple: location, timeStamp, name, each element has its own type
+type TupleData = [
+  location: Location,
+  timeStamp: number,
+  name: string,
+];
+
+
 type Person = {
   firstName: string;
   lastName: string;
