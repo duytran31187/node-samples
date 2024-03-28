@@ -56,3 +56,15 @@ console.log(`as used as callback, this is lost`);
 setTimeout( person5.display, 1000); // as used as callback, this is lost
 console.log(`as used as callback, this is lost, have to bind to prevent losing this`);
 setTimeout(person5.display.bind(person5), 2000); // have to bind to prevent losing this
+
+// closure
+console.log(`---------------------CLOSURE---------------------`);
+const addFunc = (function () {
+    let counter = 0;
+    return function () {
+        counter += 1; return counter;}
+})();
+console.log(`addFunc: ${addFunc()}`); // first time call, initialize counter = 0, then return a function that increase counter by 1, it self invoke the function. currently, addFunc = funtion() {return counter +=1}
+console.log(`addFunc: ${addFunc()}`); // invoke the function to increase counter by 1 - on second call there's no declare line: let counter=0
+console.log(`addFunc: ${addFunc()}`);
+console.log(`addFunc: ${addFunc()}`);
