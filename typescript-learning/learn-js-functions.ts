@@ -32,3 +32,27 @@ console.log(`person.address.apply(person1): ${person.address.apply(person1, ['Ha
 
 // Since JavaScript arrays do not have a max() method, you can apply the Math.max() method instead.
 console.log(`find max value of an array ${Math.max.apply(null, [1, 2, 3, 4, 5])}`); // The first argument (null) does not matter. It is not used in this example.
+
+
+// With the bind() method, an object can borrow a method from another object.
+console.log(`---------------------BIND---------------------`);
+  
+const member = {
+firstName:"Hege",
+lastName: "Nilsen",
+}
+  
+console.log(`member borrowed fullName from person: ${person.fullName.bind(member)()}`); // have to invoke after bind
+// Sometimes the bind() method has to be used to prevent losing this.
+// When a function is used as a callback, this is lost.
+const person5 = {
+firstName:"John",
+lastName: "Doe",
+display: function () {
+    console.log(`demo bind: ${this.firstName} ${this.lastName}`);
+}
+}
+console.log(`as used as callback, this is lost`);
+setTimeout( person5.display, 1000); // as used as callback, this is lost
+console.log(`as used as callback, this is lost, have to bind to prevent losing this`);
+setTimeout(person5.display.bind(person5), 2000); // have to bind to prevent losing this
