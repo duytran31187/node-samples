@@ -177,3 +177,12 @@ console.log(`hobby1: ${hobby1}, hobby2: ${hobby2}`);
 const sampleObject = {first: 1, second: 2, third: 3, fourth: 4, fifth: 5};
 const {first, second, third: thirdParam} = sampleObject; // first, second must match the key of the object, thirdParam is the alias of the key
 console.log(`first: ${first}, second: ${second} third ${thirdParam}`);
+
+
+// Function Rest Parameter: The rest parameter (...) allows a function to treat an indefinite number of arguments as an array
+function sum(...theArgs: number[]) {
+  return theArgs.reduce((previous, current) => {
+    return previous + current;
+  });
+}
+console.log(`rest params: ${sum(1, 2, 3)}`);
