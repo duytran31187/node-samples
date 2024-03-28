@@ -13,6 +13,20 @@ letters.forEach((letter) => {
 });
 console.log(letters.has("a"));
 console.log(letters.values());
+let textLetter = "";
+// this block only work if --downlevelIteration is set to true
+for (const x of letters.values()) {
+  textLetter += x;
+}
+//
+console.log(`textLetter: ${textLetter}`);
+
+const animalSet = new Set(['rabbit', 'dog', 'cat']);
+let animalText = '';
+animalSet.forEach(animal => {
+  animalText += animal + ', ';
+});
+console.log(`animalText: ${animalText}`);
 
 //A Map holds key-value pairs where the keys can be any datatype.
 
