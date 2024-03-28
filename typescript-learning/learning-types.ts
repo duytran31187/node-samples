@@ -180,7 +180,7 @@ console.log(`first: ${first}, second: ${second} third ${thirdParam}`);
 
 
 // Function Rest Parameter: The rest parameter (...) allows a function to treat an indefinite number of arguments as an array
-function sum(...theArgs: number[]) {
+function sum(...theArgs) {
   return theArgs.reduce((previous, current) => {
     return previous + current;
   });
