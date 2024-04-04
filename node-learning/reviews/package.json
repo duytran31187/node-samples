@@ -1,0 +1,11 @@
+{
+  "name": "reviews",
+  "version": "1.0.0",
+  "description": "review nodejs knowledge",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "duytran31187@gmail.com",
+  "license": "ISC"
+}
