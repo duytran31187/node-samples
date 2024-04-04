@@ -1,6 +1,8 @@
-const names = require('./names');
-const sayHi = require('./utils');
+const http = require('http');
 
-sayHi(names.user1);
-sayHi(names.user2);
-console.log(names.users);
+const server = http.createServer((req, res) => {
+    console.log(`server is running on port 5000.................`);
+    res.write('Hello World aaaaaaaaaaaa');
+    res.end();
+});
+server.listen(5000);

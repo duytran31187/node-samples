@@ -6,7 +6,8 @@ const server = http.createServer((req, res) => {
     res.write(`Hello World \n`);
     if (req.url === '/about') {
         res.end('The about page\n');
+    } else {
+        res.end('homepage');
     }
-    res.end('homepage');
 });
 server.listen(5000);
