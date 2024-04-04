@@ -12,6 +12,14 @@ app.get("/about", (req, res) => {
     console.log(`user hit the server`);
     res.send("GET request to About");
 });
+app.get("/projects", (req, res) => {
+    console.log(`user hit the server`);
+    res.send("GET request to projects");
+});
+app.get("/contact", (req, res) => {
+    console.log(`user hit the server`);
+    res.send("GET request to contact");
+});
 app.all("*", (req, res) => {
     res.status(404).send("404 not found");
 });
