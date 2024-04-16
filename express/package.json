@@ -2,9 +2,9 @@
   "name": "express",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "useHelmet.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon --watch"
   },
   "keywords": [
     "learn",
@@ -16,6 +16,7 @@
     "nodemon": "^3.1.0"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "helmet": "^7.1.0"
   }
 }
