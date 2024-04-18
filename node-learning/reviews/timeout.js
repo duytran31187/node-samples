@@ -7,6 +7,8 @@ setTimeout(() => {
   console.log(' before 1');
   console.log(' before 2');
   console.log(' before 3');
+  setImmediate(() => {console.log('setImmediate console log')});
+
   console.log(' before 4');
   console.log(' before 5');
   console.log(' before 6');
