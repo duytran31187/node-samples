@@ -18,7 +18,7 @@ const app = express();
 function validateUser(req, res, next) {
     // get info out of the request object
     // do some stuff with the database
-    res.locals.validated = true;
+    res.locals.validated = true; // res.locals is an object that exists for the lifetime of the request
     console.log('validated ran');
     next(); // pass control to the next middleware function, unless it's the last middleware function
 }
