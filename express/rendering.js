@@ -1,9 +1,13 @@
 const express = require('express');
 const path = require('path');
+const helmet = require('helmet');
 const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(helmet({
+    contentSecurityPolicy: false, // to sort the script cant be loaded
+}));// for security  
 
 //1.  express as we know it happens. this file.
 // 2. we define a view engine
@@ -23,7 +27,9 @@ app.set('views', path.join(__dirname, 'views')); // set the views directory to t
 
 
 app.get('/', (req, res, next) => {
-    res.render('index');
+    res.render('index', {
+        name: 'John Doe',
+    });
     res.send('sanity check !!!');
 });
 
