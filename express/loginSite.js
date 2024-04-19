@@ -62,10 +62,14 @@ app.post('/process_login', (req, res) => {
 
 // route to process logout
 app.get('/logout', (req, res) => {
-    // res.clearCookie('username');
-    res.clearCookie('username');
+    res.clearCookie('username'); // clear cookie
     res.redirect('/login');
 })
+// route to post
+app.get('/post/:postId', (req, res) => {
+    res.send(`viewing post id ${req.params.postId}`);
+})
+
 // to catch invalid routes
 app.get('*', (req, res) => {
     res.send('404 not found');    
