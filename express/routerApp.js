@@ -9,8 +9,9 @@ app.use(express.urlencoded({extended: false}));
 
 // router
 const router = require('./theRouter'); // import the router
+const routerAdmin = require('./theRouter'); // import the router
 app.use('/route-to-any', router); // first argument is the ANY path, second is the router => the link will be sample: http://localhost:3000/route-to-any/about.....
-
+app.use('/admin', routerAdmin); // /admin will be the path to access the router
 app.listen(3000, () => {
     console.log(`routerApp is running on port 3000`);
 });
