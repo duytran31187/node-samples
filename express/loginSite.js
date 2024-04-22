@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 //security
 const helmet = require('helmet');
+const { error } = require('console');
 app.use(helmet());
 
 app.use(express.static('public'));
@@ -68,6 +69,23 @@ app.get('/logout', (req, res) => {
 // route to post
 app.get('/post/:postId', (req, res) => {
     res.send(`viewing post id ${req.params.postId}`);
+})
+// handle download erro
+app.get('/download/error', (req, res) => {
+    res.send('error downloading');
+})
+// app download attachment
+app.get('/attachment', (req, res) => {
+    res.download(
+        path.join(__dirname, '/public/images/node-mascot.svg'),
+        'node-mascot.svg' // optional params
+    );
+    if (error) {
+        console.log(`error downloading....`);
+        if (!res.headersSent) {
+            res.redirect('/download/error');
+        }
+    }
 })
 
 // to catch invalid routes
