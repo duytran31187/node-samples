@@ -3,25 +3,25 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const csvWriter = require('fast-csv').write;
 
-const url = 'https://vinaquick.com/collections/beaba';
-
-axios(url)
-  .then(response => {
+let url = 'https://bibomart.com.vn/sua-bot-cac-loai.html?p=';
+const numPage = 1;
+const data = [];
+for (let pa = 1; pa <=numPage; pa++) {
+  const link = url + pa;
+  axios(link).then(response => {
     const html = response.data;
     const $ = cheerio.load(html);
-    const data = [];
 
     // replace '.item' with the actual selector for the items you want to scrape
-    $('.item-container').each(function(i, elem) {
+    $('.product-item').each(function(i, elem) {
       data[i] = {
-        name: $(this).find('.item-title > a').attr('title'), // replace '.name' with the actual selector for the name
-        picture: $(this).find('.item-image img.img-loop').attr('src'), // replace '.name' with the actual selector for the name
-        price: $(this).find('.item-price > span').text().replace('₫', '').replaceAll(',', '') // replace '.price' with the actual selector for the price
+        name: $(this).find('.product-item-link').text()	, // replace '.name' with the actual selector for the name
+        price: $(this).find('.price').text().replace('₫', '').replaceAll(',', '').trim() // replace '.price' with the actual selector for the price
       };
     });
 
     console.log(data);
-    
+
     // const ws = fs.createWriteStream('output.csv');
 
     // csvWriter(data, { headers: true })
@@ -31,3 +31,9 @@ axios(url)
     //     });
   })
   .catch(console.error);
+
+}
+
+
+
+
