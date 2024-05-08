@@ -15,6 +15,13 @@ const productImageContainer = '.product-item .img-fluid';
 const filename = 'concung-suabot.csv';
 
 const ws = fs.createWriteStream(filename);
+ws
+  .on('error', (err) => {
+    console.error(`[ws] ERROR %s`, err);
+  })
+  .on('close', () => {
+    console.error(`[ws] FINISH`);
+  });
 
 const stringifier = stringify({ header: true, columns: ['id','name', 'price', 'image', 'page'], quote: true });
 
@@ -84,7 +91,7 @@ async function main() { // note: there's await function call inside so need asyn
         link = url + pa;
       }
       console.log(`%s`, link);
-      await readProductsFromLink(link) // without await, the result can be returned not in any order of pages called
+      await readProductsFromLink(link) // await make sure the function is done before moving to the next iteration (he keyword await makes JavaScript wait until that promise settles and returns its result.)
         // .then((result) => {
         //   console.log(`done link: `, link);
         // })
@@ -92,6 +99,8 @@ async function main() { // note: there's await function call inside so need asyn
         //   console.log(`main catched err: %o`, e);
         // })
     }
+    stringifier.end();
+    ws.end();  
   } catch(err) {
     console.log(err);
   }
