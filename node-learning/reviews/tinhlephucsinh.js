@@ -30,24 +30,6 @@ function jdFromDate(dd, mm, yy) {
 }
 
 /* Convert a Julian day number to day/month/year. Parameter jd is an integer */
-function jdToDate(jd) {
-	var a, b, c, d, e, m, day, month, year;
-	if (jd > 2299160) { // After 5/10/1582, Gregorian calendar
-		a = jd + 32044;
-		b = INT((4*a+3)/146097);
-		c = a - INT((b*146097)/4);
-	} else {
-		b = 0;
-		c = jd + 32082;
-	}
-	d = INT((4*c+3)/1461);
-	e = c - INT((1461*d)/4);
-	m = INT((5*e+2)/153);
-	day = e - INT((153*m+2)/5) + 1;
-	month = m + 3 - 12*INT(m/10);
-	year = b*100 + d - 4800 + INT(m/10);
-	return new Array(day, month, year);
-}
 
 /* Compute the time of the k-th new moon after the new moon of 1/1/1900 13:52 UCT 
  * (measured as the number of days since 1/1/4713 BC noon UCT, e.g., 2451545.125 is 1/1/2000 15:00 UTC).
@@ -191,22 +173,10 @@ function convertSolar2Lunar(dd, mm, yy, timeZone) {
 
 // chuyen doi ngay duong sang ngay âm
 
-const testNgayPhucSinh = (y) => { // return list correct easter days
-	const correctDates = [];
-	correctDates[2022] = 'April 17, 2022';
-	correctDates[2023] = 'April 9, 2023';
-	correctDates[2024] = 'March 31, 2024';
-	correctDates[2025] = 'April 20, 2025';
-	correctDates[2026] = 'April 5, 2026';
-	correctDates[2027] = 'March 28, 2027';
-	correctDates[2028] = 'April 16, 2028';
-	correctDates[2029] = 'April 1, 2029';
-	correctDates[2030] = 'April 21, 2030';
-	correctDates[2031] = 'April 13, 2031';
-	correctDates[2032] = 'March 28, 2032';
-	correctDates[2033] = 'April 17, 2033';
-	correctDates[2034] = 'April 9, 2034';
-	return correctDates[y];
+
+
+const cloneDate = (d) => {
+	return new Date(d.getTime());
 }
 
 const tinhngayramsau21thang3 = (y) => {
@@ -236,38 +206,68 @@ const tinhngayramsau21thang3 = (y) => {
     return results; // [day, month, y];
 };
 
-const tinhNgayPhucSinh = (year) => {// tim ngay chua nhat gan nhat SAU ngay ram
-	[d,m,y] = tinhngayramsau21thang3(year);
-    let sundayFound = false;
-	let chuaNhatPhucSinh = false;
-	let count = 0;
-	let closestSunday = new Date(y + '-'+ m + '-' + d);
-    do {
-		closestSunday.setDate(closestSunday.getDate() + 1);
-        if (closestSunday.getDay() === 0) { //sunday
-            sundayFound = true;
-            chuaNhatPhucSinh = closestSunday;
-			// console.log(`${y} PHUC SINH: ${chuaNhatPhucSinh.toDateString()} :: ${testNgayPhucSinh(y)}`);
-        }
-		// if (count > 10) { // dont want enless loop
-		// 	sundayFound = true;
-		// }
-		count++;
-    } while (!sundayFound)
-    return chuaNhatPhucSinh;
-}
+// const tinhNgayPhucSinh = (year) => {// tim ngay chua nhat gan nhat SAU ngay ram
+// 	[d,m,y] = tinhngayramsau21thang3(year);
+//     let sundayFound = false;
+// 	let chuaNhatPhucSinh = false;
+// 	let count = 0;
+// 	let closestSunday = new Date(y + '-'+ m + '-' + d);
+//     do {
+// 		closestSunday.setDate(closestSunday.getDate() + 1);
+//         if (closestSunday.getDay() === 0) { //sunday
+//             sundayFound = true;
+//             chuaNhatPhucSinh = closestSunday;
+// 			// console.log(`${y} PHUC SINH: ${chuaNhatPhucSinh.toDateString()} :: ${testNgayPhucSinh(y)}`);
+//         }
+// 		count++;
+//     } while (!sundayFound)
+//     return chuaNhatPhucSinh;
+// }
+
 const tinhThuTuLeTro = (ngayLePhucSinh) => {
-	const thutuLeTro = new Date(ngayLePhucSinh.getTime());
+	const thutuLeTro = cloneDate(ngayLePhucSinh);
 	thutuLeTro.setDate(thutuLeTro.getDate() - 46);
 	return thutuLeTro;
 }
 
-for (let ye = 2022; ye <= 2034; ye++) {
-	const ngayPhucSinh = tinhNgayPhucSinh(ye);
-	// console.log(ngayPhucSinh);
-	const leTro = tinhThuTuLeTro(ngayPhucSinh);
-	console.log(`${ye} PHUC SINH: ${ngayPhucSinh.toDateString()} le Tro ${leTro.toDateString()}`);
-	// console.log(`${ye} PHUC SINH: ${ngayPhucSinh.toDateString()} :: ${testNgayPhucSinh(ye)}`);
+
+const addDate = (currentDate, numOfDate) => {
+    const newDate = cloneDate(currentDate);
+    newDate.setDate(newDate.getDate() + numOfDate);
+    return newDate;
+};
+
+const timChuaNhatGanNhatTuNgay = (d) => {
+	// chua nhat gan nhat sau ngay d, có thể là ngày d
+	let sundayFound = false;
+	let closestSunday = cloneDate(d);
+    do {
+        if (closestSunday.getDay() === 0) { //sunday
+            sundayFound = true;
+			return closestSunday;
+        }
+		closestSunday.setDate(closestSunday.getDate() + 1);
+    } while (!sundayFound)
+}
+const tinhNgayPhucSinh = (year) => {// tim ngay chua nhat gan nhat SAU ngay ram
+	[d,m,y] = tinhngayramsau21thang3(year);
+	let closestSunday = new Date(y + '-'+ m + '-' + d);
+	closestSunday.setDate(closestSunday.getDate() + 1);
+	return timChuaNhatGanNhatTuNgay(closestSunday);
+}
+const tinhLeChuaHienLinh = () => {
+	const christmasDate = new Date(y+'-12-25');
+	const chuaNhatSauGiangsinh = timChuaNhatGanNhatTuNgay(christmasDate);
+	chuaNhatSauGiangsinh.setDate(chuaNhatSauGiangsinh.getDate())
+	return addDate(chuaNhatSauGiangsinh, 7);
 }
 
-module.exports = {tinhNgayPhucSinh, tinhThuTuLeTro};
+
+// for (let ye = 2022; ye <= 2034; ye++) {
+// 	const ngayPhucSinh = tinhNgayPhucSinh(ye);
+// 	// console.log(ngayPhucSinh);
+// 	const leTro = tinhThuTuLeTro(ngayPhucSinh);
+// 	// console.log(`${ye} PHUC SINH: ${ngayPhucSinh.toDateString()} le Tro ${leTro.toDateString()}`);
+// 	console.log(`${ye} PHUC SINH: ${ngayPhucSinh.toDateString()} :: ${testNgayPhucSinh(ye)}`);
+// }
+module.exports = {tinhNgayPhucSinh, tinhThuTuLeTro, addDate, tinhLeChuaHienLinh};
