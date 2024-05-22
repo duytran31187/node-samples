@@ -256,11 +256,18 @@ const tinhNgayPhucSinh = (year) => {// tim ngay chua nhat gan nhat SAU ngay ram
     } while (!sundayFound)
     return chuaNhatPhucSinh;
 }
+const tinhThuTuLeTro = (ngayLePhucSinh) => {
+	const thutuLeTro = new Date(ngayLePhucSinh.getTime());
+	thutuLeTro.setDate(thutuLeTro.getDate() - 46);
+	return thutuLeTro;
+}
 
+for (let ye = 2022; ye <= 2034; ye++) {
+	const ngayPhucSinh = tinhNgayPhucSinh(ye);
+	// console.log(ngayPhucSinh);
+	const leTro = tinhThuTuLeTro(ngayPhucSinh);
+	console.log(`${ye} PHUC SINH: ${ngayPhucSinh.toDateString()} le Tro ${leTro.toDateString()}`);
+	// console.log(`${ye} PHUC SINH: ${ngayPhucSinh.toDateString()} :: ${testNgayPhucSinh(ye)}`);
+}
 
-// for (let ye = 2022; ye <= 2034; ye++) {
-// 	const ngayPhucSinh = tinhNgayPhucSinh(ye);
-// 	console.log(`${ye} PHUC SINH: ${ngayPhucSinh.toDateString()} :: ${testNgayPhucSinh(ye)}`);
-// }
-
-module.exports = tinhNgayPhucSinh;
+module.exports = {tinhNgayPhucSinh, tinhThuTuLeTro};

@@ -4,7 +4,7 @@ const { stringify } = require("csv-stringify");
 const { stdout } = require('process');
 
 const {tinh4TuanMuaVong} = require('./tinh4TuanMuaVong');
-const tinhNgayPhucSinh = require('./tinhlephucsinh');
+const {tinhNgayPhucSinh, tinhThuTuLeTro} = require('./tinhlephucsinh');
 
 
 
@@ -19,7 +19,7 @@ ws
     console.error(`[ws] FINISH`);
   });
 
-const stringifier = stringify({ header: true, columns: ['year','year A|B|C','First Sunday of Advent', 'Second Sunday of Advent', 'Third Sunday of Advent', 'Fourth Sunday of Advent', 'Easter Sunday'], quote: true });
+const stringifier = stringify({ header: true, columns: ['year','year A|B|C','First Sunday of Advent', 'Second Sunday of Advent', 'Third Sunday of Advent', 'Fourth Sunday of Advent', 'Easter Sunday', 'Ash Wednesday'], quote: true });
 
 
 stringifier
@@ -33,6 +33,7 @@ stringifier
 for (var y = 2000; y <= 2040; y++) {
     [sunday1, sunday2, sunday3, sunday4, year] = tinh4TuanMuaVong(y);
     const easter = tinhNgayPhucSinh(y);
+    const ashWednesday = tinhThuTuLeTro(easter);
     stringifier.write([
         y,
         year,
@@ -40,9 +41,8 @@ for (var y = 2000; y <= 2040; y++) {
         sunday2.toDateString(),
         sunday3.toDateString(),
         sunday4.toDateString(),
-        easter.toDateString()
+        easter.toDateString(),
+        ashWednesday.toDateString()
     ]);
-    // console.log(`${year}    | ${sunday1.toDateString()} | ${sunday2.toDateString()} | ${sunday3.toDateString()} | ${sunday4.toDateString()} | ${lePhucSinh.toDateString()}`)
-    // console.log(`${year}    | ${sunday1.toLocaleString('vi-VN', { timeZone: 'UTC' })} | ${sunday2.toDateString()} | ${sunday3.toDateString()} | ${sunday4.toDateString()} | ${lePhucSinh.toDateString()}`)
 }
 stringifier.end();
