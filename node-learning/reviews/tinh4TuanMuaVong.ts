@@ -1,16 +1,25 @@
-var cloneDate = function (d) {
-    return new Date(d.getTime());
-};
-var tinh4TuanMuaVong = function (y) {
+
+const cloneDate = (d: Date): Date => {
+	return new Date(d.getTime());
+}
+
+type MuaphungSinh = {
+    week1: Date,
+    week2: Date,
+    week3: Date,
+    week4: Date,
+    yearABC: string
+}
+const tinh4TuanMuaVong =  (y: number): MuaphungSinh => {
     /////////////////////////////////////A|B|C///
-    var yearStr = y.toString();
-    var yearNums = Array.from(yearStr);
-    var countNum = 0;
-    yearNums.forEach(function (element) {
-        countNum += parseInt(element);
+    let yearStr = y.toString();
+    let yearNums = Array.from(yearStr);
+    let countNum = 0;
+    yearNums.forEach((element) => {
+        countNum += parseInt(<string>element);
     });
-    var year;
-    var finalResult;
+    let year;
+    let finalResult: MuaphungSinh;
     switch (countNum % 3) {
         case 1:
             year = 'A';
@@ -22,12 +31,12 @@ var tinh4TuanMuaVong = function (y) {
             year = 'C';
     }
     ///////////
-    var chrismastDate = new Date(y + '-12-25');
+    let chrismastDate = new Date(y + '-12-25');
     var closestSunday = chrismastDate;
     // console.log(`vong giang sinh: %s`, chrismastDate.toDateString());
     // tuan thu 4 mua vong5
-    var sundayFound = false;
-    var count = 0;
+    let sundayFound = false;
+    let count = 0;
     do {
         var closestSunday_1 = chrismastDate;
         closestSunday_1.setDate(chrismastDate.getDate() - 1);
@@ -52,7 +61,7 @@ var tinh4TuanMuaVong = function (y) {
         }
         count++;
     } while (!sundayFound);
-    return finalResult;
+    return finalResult!;
 };
 for (var ye = 2020; ye <= 2024; ye++) {
     // 29/11/2020
@@ -60,7 +69,7 @@ for (var ye = 2020; ye <= 2024; ye++) {
     // 27 tháng 11 năm 2022 => tuan 1
     // Sun Dec 03 2023 => tuan 1
     //Sun Dec 01 2024 => tuan 1
-    var result = tinh4TuanMuaVong(ye);
+    const result  = tinh4TuanMuaVong(ye);
     console.log(result);
 }
-module.exports = { tinh4TuanMuaVong: tinh4TuanMuaVong };
+module.exports = {tinh4TuanMuaVong};
