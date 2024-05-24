@@ -18,7 +18,32 @@ ws
   .on('close', () => {
     console.error(`[ws] FINISH`);
   });
-
+type NamPhungVu = {
+  year: number,
+  yearABC: string,
+  oddEven: string,
+  ashWed: Date,
+  firstSundayOfLent: Date,
+  secondSundayOfLent: Date,
+  thirdSundayOfLent: Date,
+  fourthSundayOfLent: Date,
+  fifthSundayOfLent: Date,
+  palmSunday: Date,
+  easterSunday: Date,
+  secondSundayOfEaster: Date,
+  thirdSundayOfEaster: Date,
+  fourthSundayOfEaster: Date,
+  fifthSundayOfEaster: Date,
+  sixthSundayOfEaster: Date,
+  theAscentionOfTheLord: Date,
+  pentecostSunday: Date,
+  firstSundayOfAdvent: Date,
+  secondSundayOfAdvent: Date,
+  thirdSundayOfAdvent: Date,
+  fourthSundayOfAdvent: Date,
+  christmas: Date,
+  theEpiphanyOfTheLord: Date,
+}
 const stringifier = stringify({ header: true, columns: [
     'year',
     'A|B|C',
@@ -63,31 +88,57 @@ for (var y = 2000; y <= 2050; y++) {
   const year = tuanmuaVong.yearABC;
     const easter = tinhNgayPhucSinh(y);
     const ashWednesday = tinhThuTuLeTro(easter);
+    const namphungVuIns = {
+      year: y,
+      yearABC: year,
+      oddEven: y%2 ==0 ? 'Even' : 'Odd',
+      ashWed: ashWednesday,
+      firstSundayOfLent: addDate(ashWednesday, 4),
+      secondSundayOfLent: addDate(ashWednesday, 11),
+      thirdSundayOfLent: addDate(ashWednesday, 18),
+      fourthSundayOfLent: addDate(ashWednesday, 25),
+      fifthSundayOfLent: addDate(ashWednesday, 32),
+      palmSunday: addDate(ashWednesday, 40),
+      easterSunday: easter,
+      secondSundayOfEaster: addDate(easter, 7),
+      thirdSundayOfEaster: addDate(easter, 14),
+      fourthSundayOfEaster: addDate(easter, 21),
+      fifthSundayOfEaster: addDate(easter, 28),
+      sixthSundayOfEaster: addDate(easter, 35),
+      theAscentionOfTheLord: addDate(easter, 42),
+      pentecostSunday: addDate(easter, 49),
+      firstSundayOfAdvent: tuanmuaVong.week1,
+      secondSundayOfAdvent: tuanmuaVong.week2,
+      thirdSundayOfAdvent: tuanmuaVong.week3,
+      fourthSundayOfAdvent: tuanmuaVong.week4,
+      christmas: new Date(y+'-12-25'),
+      theEpiphanyOfTheLord: tinhLeChuaHienLinh(),
+    }
     stringifier.write([
-        y,
-        year,
-        y%2 ==0 ? 'Even' : 'Odd',
-        ashWednesday.toDateString(),
-        addDate(ashWednesday, 4).toDateString(), //First Sunday of Lent
-        addDate(ashWednesday, 11).toDateString(), // second
-        addDate(ashWednesday, 18).toDateString(), // third
-        addDate(ashWednesday, 25).toDateString(), // fourth
-        addDate(ashWednesday, 33).toDateString(), // fifth
-        addDate(ashWednesday, 40).toDateString(), // Palm Sunday (Lễ Lá)
+      namphungVuIns.year,
+        namphungVuIns.yearABC,
+        namphungVuIns.oddEven,
+        namphungVuIns.ashWed,
+        namphungVuIns.firstSundayOfLent.toDateString(), //First Sunday of Lent
+        namphungVuIns.secondSundayOfLent.toDateString(), // second
+        namphungVuIns.thirdSundayOfLent.toDateString(), // third
+        namphungVuIns.fourthSundayOfLent.toDateString(), // fourth
+        namphungVuIns.fifthSundayOfLent.toDateString(), // fifth
+        namphungVuIns.palmSunday.toDateString(), // Palm Sunday (Lễ Lá)
         easter.toDateString(),
-        addDate(easter, 7).toDateString(), //second
-        addDate(easter, 14).toDateString(), // 3
-        addDate(easter, 21).toDateString(),// 4
-        addDate(easter, 28).toDateString(),// 5
-        addDate(easter, 35).toDateString(), // 6
-        addDate(easter, 42).toDateString(), // The Ascention of the Lord
-        addDate(easter, 49).toDateString(), // Pentecost Sunday
-        sunday1.toDateString(), // First Sunday of Advent
-        sunday2.toDateString(),
-        sunday3.toDateString(),
-        sunday4.toDateString(), // Fourth Sunday of Advent
-        new Date(y+'-12-25').toDateString(),  // christmas
-        tinhLeChuaHienLinh().toDateString() // chua hien linh
+        namphungVuIns.secondSundayOfEaster.toDateString(), //second
+        namphungVuIns.thirdSundayOfEaster.toDateString(), // 3
+        namphungVuIns.fourthSundayOfEaster.toDateString(),// 4
+        namphungVuIns.fifthSundayOfEaster.toDateString(),// 5
+        namphungVuIns.sixthSundayOfEaster.toDateString(), // 6
+        namphungVuIns.theAscentionOfTheLord.toDateString(), // The Ascention of the Lord
+        namphungVuIns.pentecostSunday.toDateString(), // Pentecost Sunday
+        namphungVuIns.firstSundayOfAdvent.toDateString(), // First Sunday of Advent
+        namphungVuIns.secondSundayOfAdvent.toDateString(),
+        namphungVuIns.thirdSundayOfAdvent.toDateString(),
+        namphungVuIns.fourthSundayOfAdvent.toDateString(), // Fourth Sunday of Advent
+        namphungVuIns.christmas.toDateString(),  // christmas
+        namphungVuIns.theEpiphanyOfTheLord.toDateString() // chua hien linh
     ]);
 }
 stringifier.end();
