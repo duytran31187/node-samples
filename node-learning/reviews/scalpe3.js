@@ -41,6 +41,18 @@ const mapTypeOfDate = (t) => {
   return type;
 }
 
+function readIndentRow($, pIndent, nameOfDate) {
+  fullName = '';
+  if (pIndent) {
+    const arrTags = $(pIndent).find('*');
+    $(arrTags).each((ii, eT) => {
+      fullName += $(eT).html();
+    });
+    nameOfDate += fullName;
+  }
+  return fullName;
+}
+
 const writeData = (stringifier, date, typeOfDate, nameOfDate) => {
   // console.log(date.toDateString());
   let m = date.getMonth();
@@ -102,7 +114,11 @@ const readCalendar = async (link, y) => {
               const fullDate = new Date(y + '-' + currentMonth + '-' + d);
               nameOfDate = $(row).find('.feast1').first().text();
               typeOfDate = $(row).find('.feast').first().text();
-
+              const pIndent =  $(row).find('p.indent').first();
+              if (pIndent) {
+                nameOfDate = readIndentRow($, pIndent, '');
+                // console.log(`444${nameOfDate}`);
+              }  
               // try w another class
               if (!nameOfDate) {
                 typeOfDate = $(row).find('.feastw').first().text();
@@ -114,9 +130,19 @@ const readCalendar = async (link, y) => {
               } else {
                 typeOfDate = $(row).find('.feast').first().text();
                 nameOfDate = $(row).find('.feast3').first().text();
+                const pIndent =  $(row).find('p.indent').first();
+                if (pIndent) {
+                  nameOfDate = readIndentRow($, pIndent, '');
+                  // console.log(`444${nameOfDate}`);
+                }  
                 if (!nameOfDate) {
                   typeOfDate = $(row).find('.feastw').first().text();
                   nameOfDate = $(row).find('.feast2').first().text();
+                  const pIndent =  $(row).find('p.indent').first();
+                  if (pIndent) {
+                    nameOfDate = readIndentRow($, pIndent, '');
+                    // console.log(`444${nameOfDate}`);
+                  }  
                   if (!nameOfDate) {
                     if ($(row).find('td').first().attr('rowspan') == 3) {
                       // <td align="right" rowspan="3"><span class="zdate">3</span></td><td align="center" rowspan="3"><span class="zdate">Thứ Tư</span></td>
@@ -133,24 +159,17 @@ const readCalendar = async (link, y) => {
                       exit();
                     }
                   } else {
-
+                    // const pIndent =  $(row).find('p.indent').first();
+                    // if (pIndent) {
+                    //   nameOfDate = readIndentRow($, pIndent, nameOfDate);
+                    //   // console.log(`444${nameOfDate}`);
+                    // }
+                    
                     writeData(stringifier, fullDate, typeOfDate, nameOfDate);
                   }
                 } else {
-                  // const customHtml = $(row).html();
-                  // $(row).html = customHtml.replaceAll('span', 'a');
-                  // console.log($(row).find('p.indent').first().html());
-                  let fullName = '';
-                  const pIndent =  $(row).find('p.indent').first();
-                  if (pIndent) {
-                    if (currentMonth == 1) {
-                      const arrTags = $(pIndent).find('*');
-                      $(arrTags).each((ii, eT) => {
-                        fullName += $(eT).html(); 
-                      });
-                    }
-                    nameOfDate+=fullName;
-                  }
+                  // const pIndent =  $(row).find('p.indent').first();
+                  // nameOfDate = readIndentRow($, pIndent, nameOfDate);
                   writeData(stringifier, fullDate, typeOfDate, nameOfDate);
                 }
               }
@@ -158,28 +177,32 @@ const readCalendar = async (link, y) => {
               // console.log('333');
               typeOfDate = $(row).find('span.feastw').first().text();
               nameOfDate = $(row).find('span.feast4').first().text();
+              const pIndent =  $(row).find('p.indent').first();
+              if (pIndent) {
+                nameOfDate = readIndentRow($, pIndent, '');
+                // console.log(`444${nameOfDate}`);
+              }  
               const fullDate = new Date(y + '-' + currentMonth + '-' + d);
               if (nameOfDate) {
-                // console.log(`${d} --- ${currentMonth} -- ${nameOfDate}`);
 
-                const exnameOfDate = $(row).find('.feast4').last().text();
-                nameOfDate = nameOfDate + aHtml + exnameOfDate;
+                // const exnameOfDate = $(row).find('.feast4').last().text();
+                // nameOfDate = nameOfDate + aHtml + exnameOfDate;
+                // const pIndent =  $(row).find('p.indent').first();
+                // if (pIndent) {
+                //   nameOfDate = readIndentRow($, pIndent, '');
+                //   // console.log(`444${nameOfDate}`);
+                // }
                 writeData(stringifier, fullDate, typeOfDate, nameOfDate);
-                //console.log(`${fullDate.toDateString()} là ngày lễ: ${nameOfDate} --- ${typeOfDate}`);
-                // const dataItem = {
-                //     date: fullDate.toDateString(),
-                //     type: mapTypeOfDate(typeOfDate),
-                //     name:nameOfDate
-                // };
-                // stringifier.write(dataItem);
-                // } else {
-                //   typeOfDate = $(row).find('span.feastw').first().text();
-                //   nameOfDate = $(row).find('span.feast3').first().text();
               } else {
 
                 if (!nameOfDate) {
                   typeOfDate = $(row).find('.feastw').first().text();
                   nameOfDate = $(row).find('.feast2').first().text();
+                  const pIndent =  $(row).find('p.indent').first();
+                  if (pIndent) {
+                    nameOfDate = readIndentRow($, pIndent, '');
+                    // console.log(`444${nameOfDate}`);
+                  }  
                   if (!nameOfDate) {
                     if ($(row).find('.season').length == 0) {
                       // <td rowspan="11" style="width: 40px"><div class="season">Mùa Giáng Sinh</div></td>
@@ -219,22 +242,13 @@ const readCalendar = async (link, y) => {
                       }
                     }
                   } else {
-
+                    
                     writeData(stringifier, fullDate, typeOfDate, nameOfDate);
                   }
                 } else {
                   writeData(stringifier, fullDate, typeOfDate, nameOfDate);
                 }
-                // exit();
               }
-              // if (nameOfDate == '' || nameOfDate == null) {
-              //   console.log(`FAILED ${i} ${$(row).html()}`);
-              //   exit();
-              //   rejectHandler('err');
-              // }
-
-              // writeData(stringifier, fullDate, typeOfDate, nameOfDate);
-
             }
           }
           // sleep(2000);
